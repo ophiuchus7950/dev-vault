@@ -1,0 +1,48 @@
+[workspace]
+resolver = "2"
+members = ["backend"]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2021"
+license = "MIT"
+authors = ["DevVault contributors"]
+rust-version = "1.82"
+
+[workspace.dependencies]
+# HTTP
+axum = "0.8"
+axum-extra = { version = "0.10", features = ["query"] }
+tower = { version = "0.5", features = ["util"] }
+tower-http = { version = "0.6", features = ["trace", "cors", "compression-gzip", "limit", "timeout"] }
+# Async runtime
+tokio = { version = "1", features = ["rt-multi-thread", "macros", "net", "signal"] }
+# Database
+sqlx = { version = "0.8", features = ["runtime-tokio-rustls", "postgres", "uuid", "chrono", "migrate", "macros", "json"] }
+# Types
+uuid = { version = "1", features = ["v7", "serde"] }
+chrono = { version = "0.4", features = ["serde"] }
+# Serde
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+base64 = "0.22"
+zip = { version = "2", default-features = false, features = ["deflate"] }
+# Errors
+thiserror = "2"
+anyhow = "1"
+# Validation
+validator = { version = "0.20", features = ["derive"] }
+# Config / logging
+dotenvy = "0.15"
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter", "json"] }
+# OpenAPI
+utoipa = { version = "5", features = ["axum_extras", "uuid", "chrono"] }
+# Pinned: 9.0.1 targets axum 0.8 + utoipa 5 and is compatible with zip 2.6.
+# `vendored` bundles the Swagger UI assets so image builds need no network.
+utoipa-swagger-ui = { version = "=9.0.1", features = ["axum", "vendored"] }
+
+[profile.release]
+lto = "thin"
+codegen-units = 1
+strip = true

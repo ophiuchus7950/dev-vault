@@ -1,0 +1,65 @@
+# DevVault — the whole app in one stack.
+#
+#   web  → nginx serving the built SPA + proxying /api to the API (http://localhost:8080)
+#   api  → Rust/Axum REST API (http://localhost:3000, loopback only)
+#   db   → PostgreSQL 16 with a persistent volume
+#
+# For hot-reload development use `just dev` (Vite dev server on :5173).
+
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-devvault}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD in .env}
+      POSTGRES_DB: ${POSTGRES_DB:-devvault}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - "127.0.0.1:${POSTGRES_PORT:-5432}:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-devvault} -d ${POSTGRES_DB:-devvault}"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+    restart: unless-stopped
+
+  api:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    environment:
+      DATABASE_URL: postgres://${POSTGRES_USER:-devvault}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB:-devvault}
+      BIND_ADDR: 0.0.0.0:3000
+      LOG_FORMAT: ${LOG_FORMAT:-json}
+      RUST_LOG: ${RUST_LOG:-info,devvault=info}
+      CORS_ALLOWED_ORIGINS: ${CORS_ALLOWED_ORIGINS:-http://localhost:5173,http://localhost:8080}
+      MAX_PAGE_SIZE: ${MAX_PAGE_SIZE:-100}
+      DEFAULT_PAGE_SIZE: ${DEFAULT_PAGE_SIZE:-20}
+      SEARCH_MIN_TRGM_SCORE: ${SEARCH_MIN_TRGM_SCORE:-0.3}
+      IMPORT_MAX_BYTES: ${IMPORT_MAX_BYTES:-16777216}
+    ports:
+      - "127.0.0.1:${API_PORT:-3000}:3000"
+    depends_on:
+      db:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://localhost:3000/health"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+    restart: unless-stopped
+
+  web:
+    build:
+      context: frontend
+      dockerfile: Dockerfile
+    ports:
+      - "127.0.0.1:${WEB_PORT:-8080}:80"
+    depends_on:
+      api:
+        condition: service_healthy
+    restart: unless-stopped
+
+volumes:
+  pgdata:

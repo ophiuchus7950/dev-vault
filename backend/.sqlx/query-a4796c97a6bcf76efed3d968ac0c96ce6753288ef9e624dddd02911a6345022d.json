@@ -1,0 +1,122 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "UPDATE entries SET kind = $2, title = $3, body = $4, language = $5, shell = $6,\n                  url = $7, is_pinned = $8, is_archived = $9\n           WHERE id = $1\n           RETURNING id, kind AS \"kind: EntryKind\", title, body, language, shell, url,\n                     is_pinned, is_archived, created_at, updated_at, deleted_at",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "id",
+        "type_info": "Uuid"
+      },
+      {
+        "ordinal": 1,
+        "name": "kind: EntryKind",
+        "type_info": {
+          "Custom": {
+            "name": "entry_kind",
+            "kind": {
+              "Enum": [
+                "snippet",
+                "command",
+                "note",
+                "link",
+                "doc"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "ordinal": 2,
+        "name": "title",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 3,
+        "name": "body",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 4,
+        "name": "language",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 5,
+        "name": "shell",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 6,
+        "name": "url",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 7,
+        "name": "is_pinned",
+        "type_info": "Bool"
+      },
+      {
+        "ordinal": 8,
+        "name": "is_archived",
+        "type_info": "Bool"
+      },
+      {
+        "ordinal": 9,
+        "name": "created_at",
+        "type_info": "Timestamptz"
+      },
+      {
+        "ordinal": 10,
+        "name": "updated_at",
+        "type_info": "Timestamptz"
+      },
+      {
+        "ordinal": 11,
+        "name": "deleted_at",
+        "type_info": "Timestamptz"
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        {
+          "Custom": {
+            "name": "entry_kind",
+            "kind": {
+              "Enum": [
+                "snippet",
+                "command",
+                "note",
+                "link",
+                "doc"
+              ]
+            }
+          }
+        },
+        "Text",
+        "Text",
+        "Text",
+        "Text",
+        "Text",
+        "Bool",
+        "Bool"
+      ]
+    },
+    "nullable": [
+      false,
+      false,
+      false,
+      false,
+      true,
+      true,
+      true,
+      false,
+      false,
+      false,
+      false,
+      true
+    ]
+  },
+  "hash": "a4796c97a6bcf76efed3d968ac0c96ce6753288ef9e624dddd02911a6345022d"
+}

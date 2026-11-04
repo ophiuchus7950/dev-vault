@@ -1,0 +1,34 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "SELECT t.id AS id, t.name AS name, count(e.id) AS \"count!\"\n           FROM tags t\n           LEFT JOIN entry_tags et ON et.tag_id = t.id\n           LEFT JOIN entries e ON e.id = et.entry_id AND e.deleted_at IS NULL\n           WHERE ($1::text IS NULL OR lower(t.name) LIKE '%' || lower($1) || '%')\n           GROUP BY t.id, t.name\n           ORDER BY count(e.id) DESC, lower(t.name) ASC",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "id",
+        "type_info": "Uuid"
+      },
+      {
+        "ordinal": 1,
+        "name": "name",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 2,
+        "name": "count!",
+        "type_info": "Int8"
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Text"
+      ]
+    },
+    "nullable": [
+      false,
+      false,
+      null
+    ]
+  },
+  "hash": "f01943b0ba76cab6710219d2c4e3cec95c2f78705378b5a2ccc52bd510eedc17"
+}

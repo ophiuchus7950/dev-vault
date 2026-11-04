@@ -1,0 +1,24 @@
+# Rust
+/target
+**/target
+**/*.rs.bk
+
+# Env / secrets
+.env
+.env.*
+!.env.example
+
+# Backups
+/backups
+*.dump
+
+# OS / editor
+.DS_Store
+.idea/
+.vscode/
+*.swp
+
+# Node (frontend)
+node_modules/
+dist/
+*.tsbuildinfo

@@ -1,0 +1,15 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "INSERT INTO entry_collections (entry_id, collection_id)\n         SELECT e, $2 FROM unnest($1::uuid[]) AS e\n         ON CONFLICT DO NOTHING",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "UuidArray",
+        "Uuid"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "293f83f6e6489b06c1e36726c61ba7587475f3d4103cf4cc11a3e9f3471cc60f"
+}

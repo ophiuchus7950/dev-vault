@@ -1,0 +1,187 @@
+@import "tailwindcss";
+
+/* ---------- design tokens (dark default, mirrors the UI mock) ---------- */
+:root {
+  color-scheme: dark;
+  --bg: #121613;
+  --sidebar: #0b0f0c;
+  --panel: #171c18;
+  --panel2: #1e2420;
+  --inset: #0e120f;
+  --line: #262c27;
+  --linestrong: #343c35;
+  --ink: #e8ece9;
+  --mute: #9aa49d;
+  --faint: #68726b;
+  --accent: #d7f542;
+  --accentink: #161b04;
+  --danger: #e5726f;
+  --codebg: #0d110e;
+}
+
+html.light {
+  color-scheme: light;
+  --bg: #f4f6f1;
+  --sidebar: #eceee6;
+  --panel: #ffffff;
+  --panel2: #f0f2ea;
+  --inset: #fafbf7;
+  --line: #e0e4d9;
+  --linestrong: #c8cfbf;
+  --ink: #1f241f;
+  --mute: #5c665d;
+  --faint: #8b948b;
+  --accent: #c3e637;
+  --accentink: #161b04;
+  --danger: #c2413d;
+  --codebg: #10140f;
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-sidebar: var(--sidebar);
+  --color-panel: var(--panel);
+  --color-panel2: var(--panel2);
+  --color-inset: var(--inset);
+  --color-line: var(--line);
+  --color-linestrong: var(--linestrong);
+  --color-ink: var(--ink);
+  --color-mute: var(--mute);
+  --color-faint: var(--faint);
+  --color-accent: var(--accent);
+  --color-accentink: var(--accentink);
+  --color-danger: var(--danger);
+  --color-codebg: var(--codebg);
+  --font-display: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, ui-serif, serif;
+  --font-mono: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+}
+
+/* ---------- base ---------- */
+@layer base {
+  html,
+  body,
+  #root {
+    height: 100%;
+  }
+  body {
+    @apply bg-bg text-ink antialiased;
+    font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+  }
+  ::selection {
+    background: color-mix(in srgb, var(--accent) 32%, transparent);
+  }
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--linestrong) transparent;
+  }
+  *::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  *::-webkit-scrollbar-thumb {
+    background: var(--linestrong);
+    border-radius: 8px;
+  }
+}
+
+/* ---------- primitives ---------- */
+@layer components {
+  .card {
+    @apply rounded-2xl border border-line bg-panel;
+  }
+  .eyebrow {
+    @apply font-mono text-[11px] font-medium tracking-[0.18em] uppercase text-accent;
+  }
+  .btn {
+    @apply inline-flex cursor-pointer items-center justify-center gap-2 rounded-lg px-3.5 py-2 text-sm font-medium transition-colors select-none focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent disabled:pointer-events-none disabled:opacity-50;
+  }
+  .btn-accent {
+    @apply bg-accent font-semibold text-accentink hover:brightness-110;
+  }
+  .btn-secondary {
+    @apply border border-line bg-panel2 text-ink hover:border-linestrong;
+  }
+  .btn-ghost {
+    @apply text-mute hover:bg-panel2 hover:text-ink;
+  }
+  .btn-danger {
+    @apply text-danger hover:bg-danger/10;
+  }
+  .chip {
+    @apply inline-flex items-center gap-1 rounded-full border border-line bg-panel2 px-2.5 py-0.5 text-[11px] text-mute;
+  }
+  .chip-accent {
+    @apply border-accent/40 bg-accent/10 text-ink;
+  }
+  .kbd {
+    @apply rounded border border-line bg-panel2 px-1.5 py-0.5 font-mono text-[10px] text-faint;
+  }
+  .input {
+    @apply w-full rounded-lg border border-line bg-inset px-3 py-2 text-sm text-ink placeholder:text-faint focus:border-linestrong focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-accent/50;
+  }
+  .icon-tile {
+    @apply grid size-9 shrink-0 place-items-center rounded-lg border border-line bg-panel2 text-mute;
+  }
+}
+
+/* ---------- markdown ---------- */
+.md {
+  @apply text-[15px] leading-relaxed text-ink;
+}
+.md > * + * {
+  margin-top: 0.75em;
+}
+.md h1,
+.md h2,
+.md h3 {
+  @apply font-display font-semibold text-ink;
+  margin-top: 1.25em;
+}
+.md h1 {
+  font-size: 1.5rem;
+}
+.md h2 {
+  font-size: 1.25rem;
+}
+.md h3 {
+  font-size: 1.05rem;
+}
+.md a {
+  @apply text-accent underline underline-offset-2;
+}
+.md ul {
+  @apply list-disc pl-5;
+}
+.md ol {
+  @apply list-decimal pl-5;
+}
+.md li + li {
+  margin-top: 0.25em;
+}
+.md blockquote {
+  @apply border-l-2 border-linestrong pl-3 text-mute;
+}
+.md code {
+  @apply rounded bg-inset px-1.5 py-0.5 font-mono text-[13px];
+}
+.md pre {
+  @apply overflow-x-auto rounded-xl border border-line bg-codebg p-3 font-mono text-[13px];
+}
+.md pre code {
+  @apply bg-transparent p-0;
+}
+.md table {
+  @apply w-full border-collapse text-sm;
+}
+.md th,
+.md td {
+  @apply border border-line px-2 py-1 text-left;
+}
+.md hr {
+  @apply border-line;
+}
+
+/* shiki output inside our own themed container */
+pre.shiki {
+  background-color: transparent !important;
+}

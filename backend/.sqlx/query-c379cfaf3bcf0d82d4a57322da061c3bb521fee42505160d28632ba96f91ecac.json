@@ -1,0 +1,99 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "SELECT id, kind AS \"kind: EntryKind\", title, body, language, shell, url,\n                  is_pinned, is_archived, created_at, updated_at, deleted_at\n           FROM entries ORDER BY created_at, id",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "id",
+        "type_info": "Uuid"
+      },
+      {
+        "ordinal": 1,
+        "name": "kind: EntryKind",
+        "type_info": {
+          "Custom": {
+            "name": "entry_kind",
+            "kind": {
+              "Enum": [
+                "snippet",
+                "command",
+                "note",
+                "link",
+                "doc"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "ordinal": 2,
+        "name": "title",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 3,
+        "name": "body",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 4,
+        "name": "language",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 5,
+        "name": "shell",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 6,
+        "name": "url",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 7,
+        "name": "is_pinned",
+        "type_info": "Bool"
+      },
+      {
+        "ordinal": 8,
+        "name": "is_archived",
+        "type_info": "Bool"
+      },
+      {
+        "ordinal": 9,
+        "name": "created_at",
+        "type_info": "Timestamptz"
+      },
+      {
+        "ordinal": 10,
+        "name": "updated_at",
+        "type_info": "Timestamptz"
+      },
+      {
+        "ordinal": 11,
+        "name": "deleted_at",
+        "type_info": "Timestamptz"
+      }
+    ],
+    "parameters": {
+      "Left": []
+    },
+    "nullable": [
+      false,
+      false,
+      false,
+      false,
+      true,
+      true,
+      true,
+      false,
+      false,
+      false,
+      false,
+      true
+    ]
+  },
+  "hash": "c379cfaf3bcf0d82d4a57322da061c3bb521fee42505160d28632ba96f91ecac"
+}

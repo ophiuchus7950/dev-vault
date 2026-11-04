@@ -1,0 +1,33 @@
+[package]
+name = "devvault"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+authors.workspace = true
+rust-version.workspace = true
+description = "DevVault — local-first developer knowledge manager API"
+
+[dependencies]
+axum.workspace = true
+axum-extra.workspace = true
+tower.workspace = true
+tower-http.workspace = true
+tokio.workspace = true
+sqlx.workspace = true
+uuid.workspace = true
+chrono.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+base64.workspace = true
+zip.workspace = true
+thiserror.workspace = true
+anyhow.workspace = true
+validator.workspace = true
+dotenvy.workspace = true
+tracing.workspace = true
+tracing-subscriber.workspace = true
+utoipa.workspace = true
+utoipa-swagger-ui.workspace = true
+
+[dev-dependencies]
+http-body-util = "0.1"

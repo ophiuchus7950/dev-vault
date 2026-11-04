@@ -1,0 +1,28 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "SELECT et.entry_id AS entry_id, t.name AS name\n         FROM entry_tags et JOIN tags t ON t.id = et.tag_id\n         WHERE et.entry_id = ANY($1)\n         ORDER BY lower(t.name)",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "entry_id",
+        "type_info": "Uuid"
+      },
+      {
+        "ordinal": 1,
+        "name": "name",
+        "type_info": "Text"
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "UuidArray"
+      ]
+    },
+    "nullable": [
+      false,
+      false
+    ]
+  },
+  "hash": "eb8f01835c7d5933dd4af60264cd6ffb670321320f59d8582e084b5aab1e0d1a"
+}

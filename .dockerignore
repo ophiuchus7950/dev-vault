@@ -1,0 +1,13 @@
+target
+**/target
+.git
+.gitignore
+frontend
+cli
+node_modules
+backups
+*.dump
+.env
+.env.*
+docs
+*.md

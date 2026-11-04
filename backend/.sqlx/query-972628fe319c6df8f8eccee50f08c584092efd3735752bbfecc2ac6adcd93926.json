@@ -1,0 +1,17 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "INSERT INTO collections (id, name, slug, description)\n         VALUES ($1, $2, $3, $4)\n         ON CONFLICT (slug) DO NOTHING",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        "Text",
+        "Text",
+        "Text"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "972628fe319c6df8f8eccee50f08c584092efd3735752bbfecc2ac6adcd93926"
+}

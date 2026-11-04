@@ -1,0 +1,15 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "DELETE FROM entry_collections WHERE collection_id = $2 AND entry_id = ANY($1)",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "UuidArray",
+        "Uuid"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "bc9bdac22c8b0da3d7b45b71b2a058b3598c66d4bf0e34e076f13bbdac882e79"
+}
